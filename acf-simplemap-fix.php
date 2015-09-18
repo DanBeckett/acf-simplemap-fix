@@ -3,7 +3,7 @@
 * Plugin Name: Advanced Custom Fields: Simplemap Backend Compatibility Fix
 * Plugin URI: http://door4.com/
 * Description: Hotfix plugin to patch compatibility issue that breaks WYSIWYGs when using ACF & Simplemap together.
-* Version: 1.1
+* Version: 1.0
 * Author: Dan Beckett
 * Author URI: http://door4.com
 * License: GPL2
@@ -31,9 +31,9 @@
 
 $acf_check_path			=	WP_PLUGIN_DIR . '/advanced-custom-fields/acf.php';
 $acf_pro_check_path		=	WP_PLUGIN_DIR . '/advanced-custom-fields-pro/acf.php';
-$simplemap_check_path	=	WP_PLUGIN_DIR . '/simplemap/simplemap.php'
+$simplemap_check_path	=	WP_PLUGIN_DIR . '/simplemap/simplemap.php';
 
-if( ( file_exists( $acf_check_path ) ) || ( file_exists( $acf_pro_check_path ) ) && ( file_exists( $simplemap_check_path ) ) ) {
+if( ( file_exists( $acf_check_path ) || file_exists( $acf_pro_check_path ) ) &&  file_exists( $simplemap_check_path ) ) {
 
 	function acf_simplemap_fix_enqueue_scripts() {
 
