@@ -3,7 +3,7 @@
 * Plugin Name: Advanced Custom Fields: Simplemap Backend Compatibility Fix
 * Plugin URI: http://door4.com/
 * Description: Hotfix plugin to patch compatibility issue that breaks WYSIWYGs when using ACF & Simplemap together.
-* Version: 1.0
+* Version: 1.1
 * Author: Dan Beckett
 * Author URI: http://door4.com
 * License: GPL2
@@ -27,13 +27,20 @@
 * Text Domain: acf-simplemap-fix
 */
 
-/* Use function_exists to check for ACF and Simplemap */
-if( function_exists('acf') && function_exists('Simple_Map') ) {
+/* Use file_exists to check for the dependent plugins, so plugin queue order doesn't matter. */
+
+$acf_check_path			=	WP_PLUGIN_DIR . '/advanced-custom-fields/acf.php';
+$acf_pro_check_path		=	WP_PLUGIN_DIR . '/advanced-custom-fields-pro/acf.php';
+$simplemap_check_path	=	WP_PLUGIN_DIR . '/simplemap/simplemap.php'
+
+if( ( file_exists( $acf_check_path ) ) || ( file_exists( $acf_pro_check_path ) ) && ( file_exists( $simplemap_check_path ) ) ) {
 
 	function acf_simplemap_fix_enqueue_scripts() {
-		wp_register_script( 'acf-simplemap-fix-js', plugin_dir_url(__FILE__) . '/js/acf-simplemap-fix.js', array('jquery', 'acf-input'), '1.0', true);
+
+		wp_register_script( 'acf-simplemap-fix-js', plugin_dir_url(__FILE__) . 'js/acf-simplemap-fix.js', array('jquery', 'acf-input'), '1.0', true);
 		wp_enqueue_script( 'acf-simplemap-fix-js' );
-	}
+
+		}
 
 	add_action('acf/input/admin_enqueue_scripts', 'acf_simplemap_fix_enqueue_scripts');
 
